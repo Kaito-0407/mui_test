@@ -60,8 +60,8 @@ jobs:
           # ← ここを " ./ " だけにするのがポイント
           source: ./
           target: /var/www/mui_test
-          rm: true         # デプロイ先を一度空にしてからアップロード
-          debug: true      # しばらくは true にしておくと安心
+          rm: true # デプロイ先を一度空にしてからアップロード
+          debug: true # しばらくは true にしておくと安心
 
       # 10. VPS 上で依存関係インストール & ビルド & PM2 リロード
       - name: Restart app via PM2

@@ -56,9 +56,10 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           port: 22
+          # ★ここだけ変更：ワイルドカードをやめて素のパスを渡す
           source: |
-            .next/**/*
-            public/**/*
+            .next
+            public
             package.json
             package-lock.json
           target: /var/www/mui_test

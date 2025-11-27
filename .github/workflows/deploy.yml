@@ -2,40 +2,52 @@ name: Deploy to VPS
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: npm install
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
 
-      - name: Build Next.js
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
         run: npm run build
 
-      - name: Transfer project to VPS
+      - name: Upload project to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
-          source: ".next,public,package.json,package-lock.json"
-          target: "/var/www/mui_test"
+          password: ${{ secrets.VPS_PASSWORD }} # ← ここが超重要
+          port: 22
+          source: |
+            .next/
+            public/
+            package.json
+            package-lock.json
+          target: /var/www/mui_test
 
-      - name: Restart PM2
+      - name: Restart app via PM2
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
+          port: 22
           script: |
             cd /var/www/mui_test
-            npm install --production
-            pm2 delete mui_test || true
-            pm2 start npm --name "mui_test" -- start
+            npm ci --omit=dev
+            pm2 reload mui_test || pm2 start npm --name "mui_test" -- start
             pm2 save

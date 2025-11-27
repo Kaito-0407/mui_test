@@ -37,10 +37,11 @@ jobs:
       - name: Run TypeScript typecheck
         run: npm run type-check
 
-      # 7. ビルド（ここまで全部通ったらビルド）
+      # 7. ビルド（ローカル側では「ビルドが通るか」のテストとして実行）
       - name: Build
         run: npm run build
 
+      # 8. 中身確認（デバッグ用。問題なければ残しておいてOK）
       - name: Show build output
         run: |
           pwd
@@ -48,7 +49,7 @@ jobs:
           ls -la .next || echo ".next not found"
           ls -la public || echo "public not found"
 
-      # 8. VPS へアップロード
+      # 9. VPS へアップロード（リポジトリ一式を送る）
       - name: Upload project to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -56,15 +57,13 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           port: 22
-          # ★ここだけ変更：ワイルドカードをやめて素のパスを渡す
-          source: |
-            .next
-            public
-            package.json
-            package-lock.json
+          # ← ここを " ./ " だけにするのがポイント
+          source: ./
           target: /var/www/mui_test
+          rm: true         # デプロイ先を一度空にしてからアップロード
+          debug: true      # しばらくは true にしておくと安心
 
-      # 9. VPS 上で PM2 リロード
+      # 10. VPS 上で依存関係インストール & ビルド & PM2 リロード
       - name: Restart app via PM2
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -74,6 +73,10 @@ jobs:
           port: 22
           script: |
             cd /var/www/mui_test
+            # 本番用依存関係インストール
             npm ci --omit=dev
+            # VPS 上でビルド
+            npm run build
+            # PM2 再起動
             pm2 reload mui_test || pm2 start npm --name "mui_test" -- start
             pm2 save

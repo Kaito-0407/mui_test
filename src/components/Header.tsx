@@ -62,7 +62,7 @@ export default function Header({ username = 'ゲスト' }: HeaderProps) {
               }
             }}
           >
-            BOARDR
+            BOARD
           </Typography>
         </Link>
 

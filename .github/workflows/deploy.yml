@@ -35,7 +35,7 @@ jobs:
 
       # 6. Typeチェック（tsc）
       - name: Run TypeScript typecheck
-        run: npm run typecheck
+        run: npm run type-check
 
       # 7. ビルド（ここまで全部通ったらビルド）
       - name: Build

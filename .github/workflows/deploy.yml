@@ -10,21 +10,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. リポジトリ取得
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 2. Node.js 24 を使用
       - name: Use Node.js 24
         uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
 
+      # 3. 依存関係インストール
       - name: Install dependencies
         run: npm ci
 
+      # 4. Lint チェック
+      - name: Run ESLint
+        run: npm run lint
+
+      # 5. フォーマットチェック（Prettier）
+      - name: Run Prettier check
+        run: npm run format:check
+
+      # 6. Typeチェック（tsc）
+      - name: Run TypeScript typecheck
+        run: npm run typecheck
+
+      # 7. ビルド（ここまで全部通ったらビルド）
       - name: Build
         run: npm run build
 
+      # 8. VPS へアップロード
       - name: Upload project to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -32,10 +49,14 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           port: 22
-          # ★ ここをシンプルに「カレントディレクトリ全部」に
-          source: "./"
-          target: "/var/www/mui_test"
+          source: |
+            .next/
+            public/
+            package.json
+            package-lock.json
+          target: /var/www/mui_test
 
+      # 9. VPS 上で PM2 リロード
       - name: Restart app via PM2
         uses: appleboy/ssh-action@v1.0.3
         with:

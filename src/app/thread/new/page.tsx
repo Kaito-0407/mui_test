@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Container,
@@ -13,21 +13,21 @@ import {
   InputLabel,
   Select,
   SelectChangeEvent,
-} from '@mui/material';
+} from "@mui/material";
 import {
   ArrowBack as ArrowBackIcon,
   Send as SendIcon,
-} from '@mui/icons-material';
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { mockCategories } from '@/data/mockData';
+} from "@mui/icons-material";
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { mockCategories } from "@/data/mockData";
 
 export default function NewThreadPage() {
   const router = useRouter();
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [content, setContent] = useState("");
   const [errors, setErrors] = useState<{
     title?: string;
     category?: string;
@@ -45,23 +45,23 @@ export default function NewThreadPage() {
     const newErrors: typeof errors = {};
 
     if (!title.trim()) {
-      newErrors.title = 'タイトルを入力してください';
+      newErrors.title = "タイトルを入力してください";
     } else if (title.length < 5) {
-      newErrors.title = 'タイトルは5文字以上で入力してください';
+      newErrors.title = "タイトルは5文字以上で入力してください";
     } else if (title.length > 100) {
-      newErrors.title = 'タイトルは100文字以内で入力してください';
+      newErrors.title = "タイトルは100文字以内で入力してください";
     }
 
     if (!category) {
-      newErrors.category = 'カテゴリーを選択してください';
+      newErrors.category = "カテゴリーを選択してください";
     }
 
     if (!content.trim()) {
-      newErrors.content = '本文を入力してください';
+      newErrors.content = "本文を入力してください";
     } else if (content.length < 10) {
-      newErrors.content = '本文は10文字以上で入力してください';
+      newErrors.content = "本文は10文字以上で入力してください";
     } else if (content.length > 5000) {
-      newErrors.content = '本文は5000文字以内で入力してください';
+      newErrors.content = "本文は5000文字以内で入力してください";
     }
 
     setErrors(newErrors);
@@ -76,21 +76,17 @@ export default function NewThreadPage() {
     }
 
     // TODO: 実際の投稿処理を実装
-    console.log('New thread:', { title, category, content });
+    console.log("New thread:", { title, category, content });
 
     // 仮のスレッドIDでリダイレクト
-    router.push('/thread/6');
+    router.push("/thread/6");
   };
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       {/* 戻るボタン */}
-      <Link href="/" style={{ textDecoration: 'none' }}>
-        <Button
-          startIcon={<ArrowBackIcon />}
-          sx={{ mb: 3 }}
-          variant="text"
-        >
+      <Link href="/" style={{ textDecoration: "none" }}>
+        <Button startIcon={<ArrowBackIcon />} sx={{ mb: 3 }} variant="text">
           スレッド一覧に戻る
         </Button>
       </Link>
@@ -139,7 +135,11 @@ export default function NewThreadPage() {
                   ))}
                 </Select>
                 {errors.category && (
-                  <Typography variant="caption" color="error" sx={{ mt: 0.5, ml: 2 }}>
+                  <Typography
+                    variant="caption"
+                    color="error"
+                    sx={{ mt: 0.5, ml: 2 }}
+                  >
                     {errors.category}
                   </Typography>
                 )}
@@ -172,15 +172,20 @@ export default function NewThreadPage() {
               sx={{
                 p: 2,
                 mb: 3,
-                bgcolor: 'grey.50',
-                border: '1px solid',
-                borderColor: 'divider',
+                bgcolor: "grey.50",
+                border: "1px solid",
+                borderColor: "divider",
               }}
             >
               <Typography variant="body2" color="text.secondary" gutterBottom>
                 投稿時の注意事項:
               </Typography>
-              <Typography variant="body2" color="text.secondary" component="ul" sx={{ m: 0, pl: 2 }}>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                component="ul"
+                sx={{ m: 0, pl: 2 }}
+              >
                 <li>誹謗中傷や不適切な投稿は禁止されています</li>
                 <li>他のユーザーを尊重した投稿を心がけてください</li>
                 <li>スレッドのタイトルは後から変更できません</li>
@@ -188,8 +193,8 @@ export default function NewThreadPage() {
             </Box>
 
             {/* アクションボタン */}
-            <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
-              <Link href="/" style={{ textDecoration: 'none' }}>
+            <Box sx={{ display: "flex", gap: 2, justifyContent: "flex-end" }}>
+              <Link href="/" style={{ textDecoration: "none" }}>
                 <Button variant="outlined" size="large">
                   キャンセル
                 </Button>

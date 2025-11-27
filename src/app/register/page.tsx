@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Container,
@@ -9,18 +9,18 @@ import {
   TextField,
   Button,
   Divider,
-} from '@mui/material';
-import { PersonAdd as PersonAddIcon } from '@mui/icons-material';
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+} from "@mui/material";
+import { PersonAdd as PersonAddIcon } from "@mui/icons-material";
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState<{
     username?: string;
     email?: string;
@@ -33,36 +33,39 @@ export default function RegisterPage() {
 
     // ユーザー名のバリデーション
     if (!username.trim()) {
-      newErrors.username = 'ユーザー名を入力してください';
+      newErrors.username = "ユーザー名を入力してください";
     } else if (username.length < 3) {
-      newErrors.username = 'ユーザー名は3文字以上で入力してください';
+      newErrors.username = "ユーザー名は3文字以上で入力してください";
     } else if (username.length > 20) {
-      newErrors.username = 'ユーザー名は20文字以内で入力してください';
-    } else if (!/^[a-zA-Z0-9_\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]+$/.test(username)) {
-      newErrors.username = 'ユーザー名に使用できない文字が含まれています';
+      newErrors.username = "ユーザー名は20文字以内で入力してください";
+    } else if (
+      !/^[a-zA-Z0-9_\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]+$/.test(username)
+    ) {
+      newErrors.username = "ユーザー名に使用できない文字が含まれています";
     }
 
     // メールアドレスのバリデーション
     if (!email.trim()) {
-      newErrors.email = 'メールアドレスを入力してください';
+      newErrors.email = "メールアドレスを入力してください";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = '有効なメールアドレスを入力してください';
+      newErrors.email = "有効なメールアドレスを入力してください";
     }
 
     // パスワードのバリデーション
     if (!password) {
-      newErrors.password = 'パスワードを入力してください';
+      newErrors.password = "パスワードを入力してください";
     } else if (password.length < 8) {
-      newErrors.password = 'パスワードは8文字以上で入力してください';
+      newErrors.password = "パスワードは8文字以上で入力してください";
     } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
-      newErrors.password = 'パスワードには英大文字、英小文字、数字を含めてください';
+      newErrors.password =
+        "パスワードには英大文字、英小文字、数字を含めてください";
     }
 
     // パスワード確認のバリデーション
     if (!confirmPassword) {
-      newErrors.confirmPassword = 'パスワード(確認)を入力してください';
+      newErrors.confirmPassword = "パスワード(確認)を入力してください";
     } else if (password !== confirmPassword) {
-      newErrors.confirmPassword = 'パスワードが一致しません';
+      newErrors.confirmPassword = "パスワードが一致しません";
     }
 
     setErrors(newErrors);
@@ -77,20 +80,20 @@ export default function RegisterPage() {
     }
 
     // TODO: 実際の登録処理を実装
-    console.log('Register:', { username, email, password });
+    console.log("Register:", { username, email, password });
 
     // 仮の登録処理（成功として扱う）
-    router.push('/login');
+    router.push("/login");
   };
 
   return (
     <Container maxWidth="sm" sx={{ py: 8 }}>
-      <Box sx={{ textAlign: 'center', mb: 4 }}>
-        <Typography 
-          variant="h3" 
-          component="h1" 
+      <Box sx={{ textAlign: "center", mb: 4 }}>
+        <Typography
+          variant="h3"
+          component="h1"
           gutterBottom
-          sx={{ fontWeight: 700, letterSpacing: '0.1em' }}
+          sx={{ fontWeight: 700, letterSpacing: "0.1em" }}
         >
           BOARD
         </Typography>
@@ -194,9 +197,9 @@ export default function RegisterPage() {
               sx={{
                 p: 2,
                 mb: 3,
-                bgcolor: 'grey.50',
-                border: '1px solid',
-                borderColor: 'divider',
+                bgcolor: "grey.50",
+                border: "1px solid",
+                borderColor: "divider",
               }}
             >
               <Typography variant="body2" color="text.secondary">
@@ -211,7 +214,12 @@ export default function RegisterPage() {
               variant="contained"
               size="large"
               endIcon={<PersonAddIcon />}
-              disabled={!username.trim() || !email.trim() || !password || !confirmPassword}
+              disabled={
+                !username.trim() ||
+                !email.trim() ||
+                !password ||
+                !confirmPassword
+              }
               sx={{ mb: 2 }}
             >
               登録
@@ -220,11 +228,11 @@ export default function RegisterPage() {
             <Divider sx={{ my: 3 }} />
 
             {/* ログインへのリンク */}
-            <Box sx={{ textAlign: 'center' }}>
+            <Box sx={{ textAlign: "center" }}>
               <Typography variant="body2" color="text.secondary">
                 すでにアカウントをお持ちですか？
               </Typography>
-              <Link href="/login" style={{ textDecoration: 'none' }}>
+              <Link href="/login" style={{ textDecoration: "none" }}>
                 <Button variant="outlined" fullWidth sx={{ mt: 1 }}>
                   ログイン
                 </Button>
@@ -235,8 +243,8 @@ export default function RegisterPage() {
       </Card>
 
       {/* ゲストとして利用 */}
-      <Box sx={{ textAlign: 'center', mt: 3 }}>
-        <Link href="/" style={{ textDecoration: 'none' }}>
+      <Box sx={{ textAlign: "center", mt: 3 }}>
+        <Link href="/" style={{ textDecoration: "none" }}>
           <Button variant="text" color="inherit">
             ゲストとして掲示板を閲覧
           </Button>

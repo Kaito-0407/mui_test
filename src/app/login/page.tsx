@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Container,
@@ -10,16 +10,16 @@ import {
   Button,
   Divider,
   Link as MuiLink,
-} from '@mui/material';
-import { Login as LoginIcon } from '@mui/icons-material';
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+} from "@mui/material";
+import { Login as LoginIcon } from "@mui/icons-material";
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{
     email?: string;
     password?: string;
@@ -30,16 +30,16 @@ export default function LoginPage() {
 
     // メールアドレスのバリデーション
     if (!email.trim()) {
-      newErrors.email = 'メールアドレスを入力してください';
+      newErrors.email = "メールアドレスを入力してください";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = '有効なメールアドレスを入力してください';
+      newErrors.email = "有効なメールアドレスを入力してください";
     }
 
     // パスワードのバリデーション
     if (!password) {
-      newErrors.password = 'パスワードを入力してください';
+      newErrors.password = "パスワードを入力してください";
     } else if (password.length < 6) {
-      newErrors.password = 'パスワードは6文字以上で入力してください';
+      newErrors.password = "パスワードは6文字以上で入力してください";
     }
 
     setErrors(newErrors);
@@ -54,20 +54,20 @@ export default function LoginPage() {
     }
 
     // TODO: 実際の認証処理を実装
-    console.log('Login:', { email, password });
+    console.log("Login:", { email, password });
 
     // 仮のログイン処理（成功として扱う）
-    router.push('/');
+    router.push("/");
   };
 
   return (
     <Container maxWidth="sm" sx={{ py: 8 }}>
-      <Box sx={{ textAlign: 'center', mb: 4 }}>
-        <Typography 
-          variant="h3" 
-          component="h1" 
+      <Box sx={{ textAlign: "center", mb: 4 }}>
+        <Typography
+          variant="h3"
+          component="h1"
           gutterBottom
-          sx={{ fontWeight: 700, letterSpacing: '0.1em' }}
+          sx={{ fontWeight: 700, letterSpacing: "0.1em" }}
         >
           BOARD
         </Typography>
@@ -126,7 +126,7 @@ export default function LoginPage() {
             </Box>
 
             {/* パスワードを忘れた場合 */}
-            <Box sx={{ mb: 3, textAlign: 'right' }}>
+            <Box sx={{ mb: 3, textAlign: "right" }}>
               <Typography variant="body2">
                 <MuiLink href="#" underline="hover" color="text.secondary">
                   パスワードをお忘れですか？
@@ -150,11 +150,11 @@ export default function LoginPage() {
             <Divider sx={{ my: 3 }} />
 
             {/* 新規登録へのリンク */}
-            <Box sx={{ textAlign: 'center' }}>
+            <Box sx={{ textAlign: "center" }}>
               <Typography variant="body2" color="text.secondary">
                 アカウントをお持ちでないですか？
               </Typography>
-              <Link href="/register" style={{ textDecoration: 'none' }}>
+              <Link href="/register" style={{ textDecoration: "none" }}>
                 <Button variant="outlined" fullWidth sx={{ mt: 1 }}>
                   新規登録
                 </Button>
@@ -165,8 +165,8 @@ export default function LoginPage() {
       </Card>
 
       {/* ゲストとして利用 */}
-      <Box sx={{ textAlign: 'center', mt: 3 }}>
-        <Link href="/" style={{ textDecoration: 'none' }}>
+      <Box sx={{ textAlign: "center", mt: 3 }}>
+        <Link href="/" style={{ textDecoration: "none" }}>
           <Button variant="text" color="inherit">
             ゲストとして掲示板を閲覧
           </Button>

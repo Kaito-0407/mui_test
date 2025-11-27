@@ -1,34 +1,34 @@
-'use client';
+"use client";
 
-import { 
-  Container, 
-  Typography, 
-  Box, 
-  Card, 
+import {
+  Container,
+  Typography,
+  Box,
+  Card,
   CardContent,
   Chip,
   TextField,
   Button,
   Divider,
   Avatar,
-  Paper
-} from '@mui/material';
-import { 
+  Paper,
+} from "@mui/material";
+import {
   Send as SendIcon,
   ArrowBack as ArrowBackIcon,
-  PushPin as PushPinIcon
-} from '@mui/icons-material';
-import { mockThreads, mockPosts } from '@/data/mockData';
-import { useState } from 'react';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
+  PushPin as PushPinIcon,
+} from "@mui/icons-material";
+import { mockThreads, mockPosts } from "@/data/mockData";
+import { useState } from "react";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 export default function ThreadDetailPage() {
   const params = useParams();
   const threadId = params.id as string;
-  const thread = mockThreads.find(t => t.id === threadId);
+  const thread = mockThreads.find((t) => t.id === threadId);
   const posts = mockPosts[threadId] || [];
-  const [newPost, setNewPost] = useState('');
+  const [newPost, setNewPost] = useState("");
 
   if (!thread) {
     return (
@@ -44,20 +44,20 @@ export default function ThreadDetailPage() {
   }
 
   const formatDate = (date: Date) => {
-    return date.toLocaleString('ja-JP', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
+    return date.toLocaleString("ja-JP", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: 投稿処理を実装
-    console.log('New post:', newPost);
-    setNewPost('');
+    console.log("New post:", newPost);
+    setNewPost("");
   };
 
   // アンカーリンク（>>数字）を検出して置換
@@ -70,11 +70,11 @@ export default function ThreadDetailPage() {
             key={index}
             component="span"
             sx={{
-              color: 'primary.main',
+              color: "primary.main",
               fontWeight: 600,
-              cursor: 'pointer',
-              '&:hover': {
-                textDecoration: 'underline',
+              cursor: "pointer",
+              "&:hover": {
+                textDecoration: "underline",
               },
             }}
           >
@@ -89,12 +89,8 @@ export default function ThreadDetailPage() {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* 戻るボタン */}
-      <Link href="/" style={{ textDecoration: 'none' }}>
-        <Button 
-          startIcon={<ArrowBackIcon />} 
-          sx={{ mb: 3 }}
-          variant="text"
-        >
+      <Link href="/" style={{ textDecoration: "none" }}>
+        <Button startIcon={<ArrowBackIcon />} sx={{ mb: 3 }} variant="text">
           スレッド一覧に戻る
         </Button>
       </Link>
@@ -102,15 +98,22 @@ export default function ThreadDetailPage() {
       {/* スレッド情報 */}
       <Card elevation={2} sx={{ mb: 4 }}>
         <CardContent sx={{ p: 4 }}>
-          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 2 }}>
-            {thread.isPinned && (
-              <PushPinIcon color="action" />
-            )}
+          <Box
+            sx={{ display: "flex", alignItems: "flex-start", gap: 2, mb: 2 }}
+          >
+            {thread.isPinned && <PushPinIcon color="action" />}
             <Box sx={{ flex: 1 }}>
               <Typography variant="h4" component="h1" gutterBottom>
                 {thread.title}
               </Typography>
-              <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                }}
+              >
                 <Chip label={thread.category} variant="outlined" />
                 <Typography variant="body2" color="text.secondary">
                   作成者: {thread.username}
@@ -122,7 +125,7 @@ export default function ThreadDetailPage() {
             </Box>
           </Box>
           <Divider sx={{ my: 2 }} />
-          <Box sx={{ display: 'flex', gap: 3 }}>
+          <Box sx={{ display: "flex", gap: 3 }}>
             <Typography variant="body2" color="text.secondary">
               投稿数: {thread.postCount}
             </Typography>
@@ -142,35 +145,35 @@ export default function ThreadDetailPage() {
             sx={{
               mb: 2,
               p: 3,
-              border: '1px solid',
-              borderColor: 'divider',
+              border: "1px solid",
+              borderColor: "divider",
               borderRadius: 0,
-              transition: 'all 0.2s',
-              '&:hover': {
-                backgroundColor: 'grey.50',
+              transition: "all 0.2s",
+              "&:hover": {
+                backgroundColor: "grey.50",
               },
             }}
           >
-            <Box sx={{ display: 'flex', gap: 2 }}>
+            <Box sx={{ display: "flex", gap: 2 }}>
               {/* 投稿番号とアバター */}
-              <Box sx={{ minWidth: '60px', textAlign: 'center' }}>
-                <Typography 
-                  variant="h6" 
-                  sx={{ 
+              <Box sx={{ minWidth: "60px", textAlign: "center" }}>
+                <Typography
+                  variant="h6"
+                  sx={{
                     fontWeight: 700,
-                    color: 'text.secondary',
-                    mb: 1
+                    color: "text.secondary",
+                    mb: 1,
                   }}
                 >
                   {post.postNumber}
                 </Typography>
                 <Avatar
                   sx={{
-                    bgcolor: 'black',
+                    bgcolor: "black",
                     width: 40,
                     height: 40,
-                    fontSize: '0.875rem',
-                    mx: 'auto',
+                    fontSize: "0.875rem",
+                    mx: "auto",
                   }}
                 >
                   {post.username[0]}
@@ -179,7 +182,15 @@ export default function ThreadDetailPage() {
 
               {/* 投稿内容 */}
               <Box sx={{ flex: 1 }}>
-                <Box sx={{ display: 'flex', gap: 2, mb: 1, alignItems: 'center', flexWrap: 'wrap' }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                    mb: 1,
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                  }}
+                >
                   <Typography variant="body1" fontWeight={600}>
                     {post.username}
                   </Typography>
@@ -187,10 +198,10 @@ export default function ThreadDetailPage() {
                     {formatDate(post.createdAt)}
                   </Typography>
                 </Box>
-                <Typography 
-                  variant="body1" 
-                  sx={{ 
-                    whiteSpace: 'pre-wrap',
+                <Typography
+                  variant="body1"
+                  sx={{
+                    whiteSpace: "pre-wrap",
                     lineHeight: 1.8,
                   }}
                 >
@@ -219,7 +230,13 @@ export default function ThreadDetailPage() {
                 onChange={(e) => setNewPost(e.target.value)}
                 sx={{ mb: 2 }}
               />
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
                 <Typography variant="body2" color="text.secondary">
                   ※誹謗中傷や不適切な投稿は禁止されています
                 </Typography>
@@ -238,7 +255,7 @@ export default function ThreadDetailPage() {
       )}
 
       {thread.isLocked && (
-        <Paper sx={{ p: 4, textAlign: 'center', bgcolor: 'grey.50' }}>
+        <Paper sx={{ p: 4, textAlign: "center", bgcolor: "grey.50" }}>
           <Typography variant="h6" color="text.secondary">
             このスレッドはロックされています
           </Typography>

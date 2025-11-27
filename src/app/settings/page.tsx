@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Container,
@@ -13,15 +13,15 @@ import {
   Switch,
   FormControlLabel,
   Alert,
-} from '@mui/material';
+} from "@mui/material";
 import {
   ArrowBack as ArrowBackIcon,
   Save as SaveIcon,
   PhotoCamera as PhotoCameraIcon,
-} from '@mui/icons-material';
-import { useState } from 'react';
-import Link from 'next/link';
-import { mockUsers } from '@/data/mockData';
+} from "@mui/icons-material";
+import { useState } from "react";
+import Link from "next/link";
+import { mockUsers } from "@/data/mockData";
 
 export default function SettingsPage() {
   // 現在ログイン中のユーザーを取得（仮）
@@ -29,9 +29,9 @@ export default function SettingsPage() {
 
   const [username, setUsername] = useState(currentUser.username);
   const [email, setEmail] = useState(currentUser.email);
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [emailNotification, setEmailNotification] = useState(true);
   const [showSuccess, setShowSuccess] = useState(false);
   const [errors, setErrors] = useState<{
@@ -47,34 +47,35 @@ export default function SettingsPage() {
 
     // ユーザー名のバリデーション
     if (!username.trim()) {
-      newErrors.username = 'ユーザー名を入力してください';
+      newErrors.username = "ユーザー名を入力してください";
     } else if (username.length < 3) {
-      newErrors.username = 'ユーザー名は3文字以上で入力してください';
+      newErrors.username = "ユーザー名は3文字以上で入力してください";
     } else if (username.length > 20) {
-      newErrors.username = 'ユーザー名は20文字以内で入力してください';
+      newErrors.username = "ユーザー名は20文字以内で入力してください";
     }
 
     // メールアドレスのバリデーション
     if (!email.trim()) {
-      newErrors.email = 'メールアドレスを入力してください';
+      newErrors.email = "メールアドレスを入力してください";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = '有効なメールアドレスを入力してください';
+      newErrors.email = "有効なメールアドレスを入力してください";
     }
 
     // パスワード変更時のバリデーション
     if (newPassword) {
       if (!currentPassword) {
-        newErrors.currentPassword = '現在のパスワードを入力してください';
+        newErrors.currentPassword = "現在のパスワードを入力してください";
       }
 
       if (newPassword.length < 8) {
-        newErrors.newPassword = 'パスワードは8文字以上で入力してください';
+        newErrors.newPassword = "パスワードは8文字以上で入力してください";
       } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(newPassword)) {
-        newErrors.newPassword = 'パスワードには英大文字、英小文字、数字を含めてください';
+        newErrors.newPassword =
+          "パスワードには英大文字、英小文字、数字を含めてください";
       }
 
       if (newPassword !== confirmPassword) {
-        newErrors.confirmPassword = 'パスワードが一致しません';
+        newErrors.confirmPassword = "パスワードが一致しません";
       }
     }
 
@@ -90,10 +91,10 @@ export default function SettingsPage() {
     }
 
     // TODO: 実際の更新処理を実装
-    console.log('Update settings:', {
+    console.log("Update settings:", {
       username,
       email,
-      newPassword: newPassword ? '***' : null,
+      newPassword: newPassword ? "***" : null,
       emailNotification,
     });
 
@@ -101,20 +102,16 @@ export default function SettingsPage() {
     setTimeout(() => setShowSuccess(false), 3000);
 
     // パスワードフィールドをクリア
-    setCurrentPassword('');
-    setNewPassword('');
-    setConfirmPassword('');
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
   };
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       {/* 戻るボタン */}
-      <Link href="/profile" style={{ textDecoration: 'none' }}>
-        <Button
-          startIcon={<ArrowBackIcon />}
-          sx={{ mb: 3 }}
-          variant="text"
-        >
+      <Link href="/profile" style={{ textDecoration: "none" }}>
+        <Button startIcon={<ArrowBackIcon />} sx={{ mb: 3 }} variant="text">
           プロフィールに戻る
         </Button>
       </Link>
@@ -137,13 +134,13 @@ export default function SettingsPage() {
           </Typography>
 
           {/* アバター */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 3, mb: 4 }}>
             <Avatar
               sx={{
                 width: 80,
                 height: 80,
-                bgcolor: 'black',
-                fontSize: '1.5rem',
+                bgcolor: "black",
+                fontSize: "1.5rem",
               }}
             >
               {username[0]?.toUpperCase()}
@@ -288,8 +285,8 @@ export default function SettingsPage() {
       </Card>
 
       {/* 保存ボタン */}
-      <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
-        <Link href="/profile" style={{ textDecoration: 'none' }}>
+      <Box sx={{ display: "flex", gap: 2, justifyContent: "flex-end" }}>
+        <Link href="/profile" style={{ textDecoration: "none" }}>
           <Button variant="outlined" size="large">
             キャンセル
           </Button>
@@ -307,7 +304,10 @@ export default function SettingsPage() {
       <Divider sx={{ my: 4 }} />
 
       {/* アカウント削除 */}
-      <Card elevation={0} sx={{ border: '1px solid', borderColor: 'error.main' }}>
+      <Card
+        elevation={0}
+        sx={{ border: "1px solid", borderColor: "error.main" }}
+      >
         <CardContent sx={{ p: 4 }}>
           <Typography variant="h6" gutterBottom color="error">
             アカウントの削除

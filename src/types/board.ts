@@ -6,7 +6,7 @@ export interface User {
   email: string;
   joinedAt: Date;
   postCount: number;
-  role?: 'admin' | 'user';
+  role?: "admin" | "user";
 }
 
 export interface Post {
@@ -40,4 +40,4 @@ export interface Category {
   threadCount: number;
 }
 
-export type SortOrder = 'newest' | 'oldest' | 'mostPosts' | 'mostViews';
+export type SortOrder = "newest" | "oldest" | "mostPosts" | "mostViews";

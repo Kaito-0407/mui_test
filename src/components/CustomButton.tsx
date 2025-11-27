@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import styles from '@/styles/components.scss';
+import styles from "@/styles/components.scss";
 
 interface CustomButtonProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary';
+  variant?: "primary" | "secondary";
   onClick?: () => void;
 }
 
-export default function CustomButton({ 
-  children, 
-  variant = 'primary', 
-  onClick 
+export default function CustomButton({
+  children,
+  variant = "primary",
+  onClick,
 }: CustomButtonProps) {
   return (
-    <button 
+    <button
       className={`${styles.customButton} ${styles[variant]}`}
       onClick={onClick}
     >
